@@ -36,26 +36,33 @@
                 
                 // Conexão com o novo banco
                 $newDatabaseConn = new PDO("mysql:host=$hostname;dbname=$newDatabaseName", $user, $password);
-                $oldDatabaseConn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                $newDatabaseConn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
                 // Pegando os registros do banco antigo
                 $oldRegisters = $oldDatabaseConn->query("select * from pedido");
 
+                
                 foreach ($oldRegisters as $register) {
-                    print_r($register);
+                    // Inserindo dado
+                    $queryInsert = $newDatabaseConn->prepare("INSERT INTO cliente (nome_cliente, cpf, email) VALUES (:nome, :cpf, :email)");
+                    $queryInsert->execute(array(
+                        ":nome" => $register["nome_cliente"],
+                        ":cpf" => $register["cpf"],
+                        ":email" => $register["email"]
+                    ));
+                    echo "<p>Cliente inserido...</p>";
                 }
 
                 echo "<hr />";
 
                 // Testando conexão com o novo banco
-                $newTable = $newDatabaseConn->query("desc pedido");
+                $newTable = $newDatabaseConn->query("select * from cliente");
 
                 foreach ($newTable as $result) {
                     print_r($result);
                 }
-
             } catch (PDOException $e) {
-                echo 'Falha no erro :C - ' . $e->getMessage(); 
+                echo "Falha no erro :C - " . $e->getMessage(); 
             } finally {
                 $oldDatabaseConn = null;
                 $newDatabaseConn = null;
