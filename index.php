@@ -24,21 +24,41 @@
             error_reporting(E_ALL);
 
             $hostname = 'localhost';
-            $database = 'projeto_php';
+            $oldDatabaseName = 'projeto_php';
+            $newDatabaseName = 'projeto_php_estruturado';
             $user = 'root';
             $password = 'loginRoot';
 
             try {
-                $conn = new PDO("mysql:host=$hostname;dbname=$database", $user, $password);
-                $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                $sql = 'select * from pedido';
-                $results = $conn->query($sql);
-                // print_r($req);
-                foreach ($results as $result) {
+                // Conexão com o banco antigo
+                $oldDatabaseConn = new PDO("mysql:host=$hostname;dbname=$oldDatabaseName", $user, $password);
+                $oldDatabaseConn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                
+                // Conexão com o novo banco
+                $newDatabaseConn = new PDO("mysql:host=$hostname;dbname=$newDatabaseName", $user, $password);
+                $oldDatabaseConn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                // Pegando os registros do banco antigo
+                $oldRegisters = $oldDatabaseConn->query("select * from pedido");
+
+                foreach ($oldRegisters as $register) {
+                    print_r($register);
+                }
+
+                echo "<hr />";
+
+                // Testando conexão com o novo banco
+                $newTable = $newDatabaseConn->query("desc pedido");
+
+                foreach ($newTable as $result) {
                     print_r($result);
                 }
+
             } catch (PDOException $e) {
                 echo 'Falha no erro :C - ' . $e->getMessage(); 
+            } finally {
+                $oldDatabaseConn = null;
+                $newDatabaseConn = null;
             }
         ?>
     </pre>
