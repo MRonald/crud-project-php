@@ -44,24 +44,38 @@
                 
                 foreach ($oldRegisters as $register) {
                     // Inserindo dado do cliente
-                    $clientInsert = $newDatabaseConn->prepare("INSERT INTO cliente (nome_cliente, cpf, email) VALUES (:nome, :cpf, :email)");
-                    $clientInsert->execute(array(
-                        ":nome" => $register["nome_cliente"],
-                        ":cpf" => $register["cpf"],
-                        ":email" => $register["email"]
-                    ));
-                    echo "<p>Cliente inserido...</p>";
+                    // $clientInsert = $newDatabaseConn->prepare("INSERT INTO cliente (nome_cliente, cpf, email) VALUES (:nome, :cpf, :email)");
+                    // $clientInsert->execute(array(
+                    //     ":nome" => $register["nome_cliente"],
+                    //     ":cpf" => $register["cpf"],
+                    //     ":email" => $register["email"]
+                    // ));
+                    // echo "<p>Cliente inserido...</p>";
                     
                     // Inserindo dado do produto
-                    $productInsert = $newDatabaseConn->prepare(
-                        "INSERT INTO produto (cod_barras, nome_produto, valor_unitario) VALUES (:codBarras, :nomeProduto, :valorUnitario)"
-                    );
-                    $productInsert->execute(array(
-                        ":codBarras" => $register["cod_barras"],
-                        ":nomeProduto" => $register["nome_produto"],
-                        ":valorUnitario" => $register["valor_unitario"]
-                    ));
-                    echo "<p>Produto inserido...</p>";
+                    // $productInsert = $newDatabaseConn->prepare(
+                    //     "INSERT INTO produto (cod_barras, nome_produto, valor_unitario) VALUES (:codBarras, :nomeProduto, :valorUnitario)"
+                    // );
+                    // $productInsert->execute(array(
+                    //     ":codBarras" => $register["cod_barras"],
+                    //     ":nomeProduto" => $register["nome_produto"],
+                    //     ":valorUnitario" => $register["valor_unitario"]
+                    // ));
+                    // echo "<p>Produto inserido...</p>";
+                    
+                    // Inserindo dado do pedido
+                    // $orderInsert = $newDatabaseConn->prepare(
+                    //     "INSERT INTO pedido (data_pedido, id_cliente, id_produto, quantidade) VALUES (:dataPedido, :idCliente, :idProduto, :quantidade)"
+                    // );
+                    $idCliente = $newDatabaseConn->prepare("select id from cliente where cpf = " . $register["cpf"]);
+                    print_r($idCliente);
+                    // $orderInsert->execute(array(
+                    //     ":dataPedido" => $register["data_pedido"],
+                    //     ":idCliente" => "",
+                    //     ":idProduto" => "",
+                    //     ":quantidade" => $register["quantidade"]
+                    // ));
+                    echo "<p>Pedido inserido...</p>";
                 }
 
                 echo "<hr />";
