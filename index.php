@@ -43,20 +43,31 @@
 
                 
                 foreach ($oldRegisters as $register) {
-                    // Inserindo dado
-                    $queryInsert = $newDatabaseConn->prepare("INSERT INTO cliente (nome_cliente, cpf, email) VALUES (:nome, :cpf, :email)");
-                    $queryInsert->execute(array(
+                    // Inserindo dado do cliente
+                    $clientInsert = $newDatabaseConn->prepare("INSERT INTO cliente (nome_cliente, cpf, email) VALUES (:nome, :cpf, :email)");
+                    $clientInsert->execute(array(
                         ":nome" => $register["nome_cliente"],
                         ":cpf" => $register["cpf"],
                         ":email" => $register["email"]
                     ));
                     echo "<p>Cliente inserido...</p>";
+                    
+                    // Inserindo dado do produto
+                    $productInsert = $newDatabaseConn->prepare(
+                        "INSERT INTO produto (cod_barras, nome_produto, valor_unitario) VALUES (:codBarras, :nomeProduto, :valorUnitario)"
+                    );
+                    $productInsert->execute(array(
+                        ":codBarras" => $register["cod_barras"],
+                        ":nomeProduto" => $register["nome_produto"],
+                        ":valorUnitario" => $register["valor_unitario"]
+                    ));
+                    echo "<p>Produto inserido...</p>";
                 }
 
                 echo "<hr />";
 
                 // Testando conexão com o novo banco
-                $newTable = $newDatabaseConn->query("select * from cliente");
+                $newTable = $newDatabaseConn->query("select * from produto");
 
                 foreach ($newTable as $result) {
                     print_r($result);
