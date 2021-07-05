@@ -41,28 +41,51 @@
                 // Pegando os registros do banco antigo
                 $oldRegisters = $oldDatabaseConn->query("select * from pedido");
 
-                
                 foreach ($oldRegisters as $register) {
                     // Inserindo dado do cliente
-                    // $clientInsert = $newDatabaseConn->prepare("INSERT INTO cliente (nome_cliente, cpf, email) VALUES (:nome, :cpf, :email)");
-                    // $clientInsert->execute(array(
-                    //     ":nome" => $register["nome_cliente"],
-                    //     ":cpf" => $register["cpf"],
-                    //     ":email" => $register["email"]
-                    // ));
-                    // echo "<p>Cliente inserido...</p>";
+                    $clientInsert = $newDatabaseConn->prepare("INSERT INTO cliente (nome_cliente, cpf, email) VALUES (:nome, :cpf, :email)");
+                    $clientInsert->execute(array(
+                        ":nome" => $register["nome_cliente"],
+                        ":cpf" => $register["cpf"],
+                        ":email" => $register["email"]
+                    ));
+                    echo "<p>Cliente inserido...</p>";
                     
                     // Inserindo dado do produto
-                    // $productInsert = $newDatabaseConn->prepare(
-                    //     "INSERT INTO produto (cod_barras, nome_produto, valor_unitario) VALUES (:codBarras, :nomeProduto, :valorUnitario)"
-                    // );
-                    // $productInsert->execute(array(
-                    //     ":codBarras" => $register["cod_barras"],
-                    //     ":nomeProduto" => $register["nome_produto"],
-                    //     ":valorUnitario" => $register["valor_unitario"]
-                    // ));
-                    // echo "<p>Produto inserido...</p>";
-                    
+                    $productInsert = $newDatabaseConn->prepare(
+                        "INSERT INTO produto (cod_barras, nome_produto, valor_unitario) VALUES (:codBarras, :nomeProduto, :valorUnitario)"
+                    );
+                    $productInsert->execute(array(
+                        ":codBarras" => $register["cod_barras"],
+                        ":nomeProduto" => $register["nome_produto"],
+                        ":valorUnitario" => $register["valor_unitario"]
+                    ));
+                    echo "<p>Produto inserido...</p>";
+                }
+
+                echo "<hr />";
+            } catch (PDOException $e) {
+                echo "Falha no erro :C - " . $e->getMessage(); 
+            } finally {
+                $oldDatabaseConn = null;
+                $newDatabaseConn = null;
+            }
+
+            // Inserindo dados do pedido
+            try {
+                // Conexão com o banco antigo
+                $oldDatabaseConn = new PDO("mysql:host=$hostname;dbname=$oldDatabaseName", $user, $password);
+                $oldDatabaseConn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                
+                // Conexão com o novo banco
+                $newDatabaseConn = new PDO("mysql:host=$hostname;dbname=$newDatabaseName", $user, $password);
+                $newDatabaseConn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                // Pegando os registros do banco antigo
+                $oldRegisters = $oldDatabaseConn->query("select * from pedido");
+
+                
+                foreach ($oldRegisters as $register) {
                     // Inserindo dado do pedido
                     $orderInsert = $newDatabaseConn->prepare(
                         "INSERT INTO pedido (data_pedido, id_cliente, id_produto, quantidade) VALUES (:dataPedido, :idCliente, :idProduto, :quantidade)"
@@ -91,12 +114,17 @@
                     echo "<p>Pedido inserido...</p>";
                 }
 
-                echo "<hr />";
+                echo "<hr /> <p>Select de todos os dados no novo banco</p>";
                 
                 // Testando conexão com o novo banco
-                $newTable = $newDatabaseConn->query("select * from cliente");
+                $newData = $newDatabaseConn->query("
+                    select p.numero_pedido, p.data_pedido, c.nome_cliente, pr.nome_produto, pr.valor_unitario, p.quantidade
+                    from pedido p 
+                    join cliente c on p.id_cliente = c.id 
+                    join produto pr on p.id_produto = pr.id;
+                ");
 
-                foreach ($newTable as $result) {
+                foreach ($newData as $result) {
                     print_r($result);
                 }
             } catch (PDOException $e) {
