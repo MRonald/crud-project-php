@@ -64,24 +64,37 @@
                     // echo "<p>Produto inserido...</p>";
                     
                     // Inserindo dado do pedido
-                    // $orderInsert = $newDatabaseConn->prepare(
-                    //     "INSERT INTO pedido (data_pedido, id_cliente, id_produto, quantidade) VALUES (:dataPedido, :idCliente, :idProduto, :quantidade)"
-                    // );
-                    $idCliente = $newDatabaseConn->prepare("select id from cliente where cpf = " . $register["cpf"]);
-                    print_r($idCliente);
-                    // $orderInsert->execute(array(
-                    //     ":dataPedido" => $register["data_pedido"],
-                    //     ":idCliente" => "",
-                    //     ":idProduto" => "",
-                    //     ":quantidade" => $register["quantidade"]
-                    // ));
+                    $orderInsert = $newDatabaseConn->prepare(
+                        "INSERT INTO pedido (data_pedido, id_cliente, id_produto, quantidade) VALUES (:dataPedido, :idCliente, :idProduto, :quantidade)"
+                    );
+
+                    // Recuperando id do cliente através do cpf
+                    $resultQuery = $newDatabaseConn->query("select id from cliente where cpf = " . $register["cpf"]);
+                    $idCliente;
+                    foreach ($resultQuery as $result) {
+                        $idCliente = $result["id"];
+                    }
+
+                    // Recuperando id do produto através do código de barras
+                    $resultQuery = $newDatabaseConn->query("select id from produto where cod_barras = " . $register["cod_barras"]);
+                    $idProduto;
+                    foreach ($resultQuery as $result) {
+                        $idProduto = $result["id"];
+                    }
+
+                    $orderInsert->execute(array(
+                        ":dataPedido" => $register["dt_pedido"],
+                        ":idCliente" => $idCliente,
+                        ":idProduto" => $idProduto,
+                        ":quantidade" => $register["quantidade"]
+                    ));
                     echo "<p>Pedido inserido...</p>";
                 }
 
                 echo "<hr />";
-
+                
                 // Testando conexão com o novo banco
-                $newTable = $newDatabaseConn->query("select * from produto");
+                $newTable = $newDatabaseConn->query("select * from cliente");
 
                 foreach ($newTable as $result) {
                     print_r($result);
