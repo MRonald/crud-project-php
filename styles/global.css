@@ -4,6 +4,7 @@
     --text-dark: #313131;
     --background-dark: #313131;
     --contrast-light: #dfdfdf;
+    --gray-dark: #666;
 }
 * {
     margin: 0;
@@ -35,6 +36,7 @@ i {
     background-color: #000000d8;
     color: var(--text-light);
 }
+
 /* Menu do header */
 .header-main .menu > i {
     padding: 7px 12px;
@@ -45,16 +47,17 @@ i {
 .header-main .menu .menu-side {
     position: absolute;
     top: 0;
-    right: 0;
+    left: 0;
     height: 100vh;
-    width: 350px;
+    width: 20vw;
     background-color: var(--background-dark);
     transition: all 1s;
-    transform: translateX(100%);
+    transform: translateX(-100%);
+    text-align: right;
 }
 .header-main .menu .menu-side > i {
     margin-top: 20px;
-    margin-left: 20px;
+    margin-right: 40px;
     padding: 7px 12px;
     border-radius: 100%;
     cursor: pointer;
@@ -67,7 +70,7 @@ i {
 }
 .header-main .menu .menu-side ul li {
     border-bottom: 1px solid var(--contrast-light);
-    padding: 20px;
+    padding: 20px 40px;
     cursor: pointer;
     transition: all .4s;
 }
@@ -76,4 +79,12 @@ i {
 .header-main .menu > i:hover {
     background-color: var(--contrast-light);
     color: var(--text-dark);
+}
+
+/* Conteúdo */
+.content-main {
+    margin-left: auto;
+    padding: 50px;
+    width: 100vw;
+    transition: width 1s;
 }

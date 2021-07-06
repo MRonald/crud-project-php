@@ -1,9 +1,12 @@
+const menuSide = document.getElementById('menu-side');
+const contentMain = document.getElementById('content-main');
+
 function hideMenu() {
-    const menuSide = document.getElementById('menu-side');
-    menuSide.style.transform = 'translateX(100%)';
+    menuSide.style.transform = 'translateX(-100%)';
+    contentMain.style.width = '100vw';
 }
 
 function showMenu() {
-    const menuSide = document.getElementById('menu-side');
     menuSide.style.transform = 'translateX(0%)';
+    contentMain.style.width = '80vw';
 }
