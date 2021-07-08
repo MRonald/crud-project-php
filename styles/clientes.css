@@ -1,0 +1,36 @@
+.content-main .titles-data {
+    display: flex;
+    border-bottom: 1px solid var(--gray-dark);
+    margin-bottom: 7px;
+}
+.content-main .result-data {
+    display: flex;
+    align-items: center;
+}
+.content-main .titles-data > div,
+.content-main .result-data > div {
+    padding: 5px;
+}
+.content-main .titles-data .name,
+.content-main .result-data .name {
+    width: 35%;
+}
+.content-main .titles-data .cpf,
+.content-main .result-data .cpf {
+    width: 20%;
+}
+.content-main .titles-data .cpf {
+    border-left: 1px solid var(--gray-dark);
+    border-right: 1px solid var(--gray-dark);
+}
+.content-main .titles-data .email,
+.content-main .result-data .email {
+    width: 30%;
+}
+.content-main .titles-data .email {
+    border-right: 1px solid var(--gray-dark);
+}
+.content-main .titles-data .actions,
+.content-main .result-data .actions {
+    width: 15%;
+}

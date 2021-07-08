@@ -24,6 +24,13 @@ ul {
 i {
     font-size: 25px;
 }
+a {
+    text-decoration: none;
+    color: initial;
+}
+input, button, a {
+    outline: none;
+}
 
 /* Header */
 .header-main {
@@ -51,7 +58,7 @@ i {
     height: 100vh;
     width: 20vw;
     background-color: var(--background-dark);
-    transition: all 1s;
+    transition: transform 1s;
     transform: translateX(-100%);
     text-align: right;
 }

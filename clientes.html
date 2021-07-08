@@ -8,6 +8,7 @@
     <script src="https://kit.fontawesome.com/407f74df21.js" crossorigin="anonymous"></script>
     <script src="scripts/menu.js" defer></script>
     <link rel="stylesheet" href="styles/global.css"/>
+    <link rel="stylesheet" href="styles/clientes.css"/>
 </head>
 <body>
     <header class="header-main">
@@ -25,32 +26,51 @@
         <h1>Crud Project</h1>
     </header>
     <main class="content-main" id="content-main">
-        <section>
-            <div class="title-section">
-                <span>Geral</span>
-                <i class="fas fa-sort-down"></i>
-            </div>
-            <div class="links-section">
-                <a href="#" class="link-program link-client">
-                    <i class="fas fa-users"></i>
-                    <span class="description-link">
-                        Clientes
-                    </span>
+        <div class="titles-data">
+            <div class="name">Nome</div>
+            <div class="cpf">CPF</div>
+            <div class="email">Email</div>
+            <div class="actions">Ações</div>
+        </div>
+        <div class="result-data">
+            <div class="name">Michael Ronald</div>
+            <div class="cpf">654.915.632-65</div>
+            <div class="email">meuemail@gmail.com</div>
+            <div class="actions">
+                <a href="editar-usuario.php?id=3">
+                    <i class="fas fa-edit"></i>
                 </a>
-                <a href="#" class="link-program link-product">
-                    <i class="fas fa-boxes"></i>
-                    <span class="description-link">
-                        Produtos
-                    </span>
-                </a>
-                <a href="#" class="link-program link-order">
-                    <i class="fas fa-file-invoice-dollar"></i>
-                    <span class="description-link">
-                        Pedidos
-                    </span>
+                <a href="excluir-usuario.php?id=3">
+                    <i class="fas fa-trash-alt"></i>
                 </a>
             </div>
-        </section>
+        </div>
+        <div class="result-data">
+            <div class="name">Michael Ronald</div>
+            <div class="cpf">654.915.632-65</div>
+            <div class="email">meuemail@gmail.com</div>
+            <div class="actions">
+                <a href="editar-usuario.php?id=3">
+                    <i class="fas fa-edit"></i>
+                </a>
+                <a href="excluir-usuario.php?id=3">
+                    <i class="fas fa-trash-alt"></i>
+                </a>
+            </div>
+        </div>
+        <div class="result-data">
+            <div class="name">Michael Ronald</div>
+            <div class="cpf">654.915.632-65</div>
+            <div class="email">meuemail@gmail.com</div>
+            <div class="actions">
+                <a href="editar-usuario.php?id=3">
+                    <i class="fas fa-edit"></i>
+                </a>
+                <a href="excluir-usuario.php?id=3">
+                    <i class="fas fa-trash-alt"></i>
+                </a>
+            </div>
+        </div>
     </main>
 </body>
 </html>
