@@ -73,16 +73,18 @@
                         <div class="cpf">'. formatCpf($result['cpf']) .'</div>
                         <div class="email">'. $result['email'] .'</div>
                         <div class="actions">
-                            <a href="editar-usuario.php?id='. $result['id'] .'">
+                            <a href="./editar/cliente.php?id='. $result['id'] .'">
                                 <i class="fas fa-edit"></i>
                             </a>
-                            <a href="excluir-usuario.php?id='. $result['id'] .'">
+                            <a href="./apagar/cliente.php?id='. $result['id'] .'">
                                 <i class="fas fa-trash-alt"></i>
                             </a>
                         </div>
                     </div>
                 ';
             }
+
+            unset($connection);
         ?>
     </main>
 </body>
