@@ -34,3 +34,8 @@
 .content-main .result-data .actions {
     width: 15%;
 }
+/* Mensagem de erro de conexão ou caso não haja nenhum registro */
+.messageUser {
+    margin-top: 50px;
+    text-align: center;
+}

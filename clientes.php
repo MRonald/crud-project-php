@@ -49,45 +49,30 @@
             <div class="email">Email</div>
             <div class="actions">Ações</div>
         </div>
-        <div class="result-data">
-            <div class="name">Michael Ronald</div>
-            <div class="cpf">654.915.632-65</div>
-            <div class="email">meuemail@gmail.com</div>
-            <div class="actions">
-                <a href="editar-usuario.php?id=3">
-                    <i class="fas fa-edit"></i>
-                </a>
-                <a href="excluir-usuario.php?id=3">
-                    <i class="fas fa-trash-alt"></i>
-                </a>
-            </div>
-        </div>
-        <div class="result-data">
-            <div class="name">Michael Ronald</div>
-            <div class="cpf">654.915.632-65</div>
-            <div class="email">meuemail@gmail.com</div>
-            <div class="actions">
-                <a href="editar-usuario.php?id=3">
-                    <i class="fas fa-edit"></i>
-                </a>
-                <a href="excluir-usuario.php?id=3">
-                    <i class="fas fa-trash-alt"></i>
-                </a>
-            </div>
-        </div>
-        <div class="result-data">
-            <div class="name">Michael Ronald</div>
-            <div class="cpf">654.915.632-65</div>
-            <div class="email">meuemail@gmail.com</div>
-            <div class="actions">
-                <a href="editar-usuario.php?id=3">
-                    <i class="fas fa-edit"></i>
-                </a>
-                <a href="excluir-usuario.php?id=3">
-                    <i class="fas fa-trash-alt"></i>
-                </a>
-            </div>
-        </div>
+        <!--  -->
+        <?php
+            include_once('./connection.php');
+
+            $resultsClients = $connection->query('SELECT * FROM cliente');
+
+            foreach ($resultsClients as $result) {
+                echo '
+                    <div class="result-data">
+                        <div class="name">'. $result['nome_cliente'] .'</div>
+                        <div class="cpf">'. $result['cpf'] .'</div>
+                        <div class="email">'. $result['email'] .'</div>
+                        <div class="actions">
+                            <a href="editar-usuario.php?id=3">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a href="excluir-usuario.php?id=3">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        </div>
+                    </div>
+                ';
+            }
+        ?>
     </main>
 </body>
 </html>
