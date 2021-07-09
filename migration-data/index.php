@@ -7,7 +7,7 @@
     <title>Document</title>
     <style>
         body {
-            background-color: #666;
+            background-color: #fff;
         }
         * {
             font-size: 20px;
@@ -27,7 +27,7 @@
             $oldDatabaseName = 'projeto_php';
             $newDatabaseName = 'projeto_php_estruturado';
             $user = 'root';
-            $password = 'loginRoot';
+            $password = '';
 
             try {
                 // Conexão com o banco antigo

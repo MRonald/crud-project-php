@@ -32,3 +32,5 @@ insert into pedido values
     (DEFAULT, 10, "Mateus", "36985214701", "mateus@email.com", now(), "9642381039705604", "Macarrão", 15.05, 5);
 
 select * from pedido;
+
+
