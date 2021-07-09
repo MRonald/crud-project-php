@@ -49,8 +49,19 @@
             <div class="email">Email</div>
             <div class="actions">Ações</div>
         </div>
-        <!--  -->
         <?php
+            function formatCpf($cpf){
+                $cpf = preg_replace("/[^0-9]/", "", $cpf);
+
+                $firstBlock = substr($cpf,0,3);
+                $secondBlock = substr($cpf,3,3);
+                $thirdBlock = substr($cpf,6,3);
+                $lastBlock = substr($cpf,-2);
+                $cpfFormated = $firstBlock.".".$secondBlock.".".$thirdBlock."-".$lastBlock;
+
+                return $cpfFormated;
+            }
+
             include_once('./connection.php');
 
             $resultsClients = $connection->query('SELECT * FROM cliente');
@@ -59,13 +70,13 @@
                 echo '
                     <div class="result-data">
                         <div class="name">'. $result['nome_cliente'] .'</div>
-                        <div class="cpf">'. $result['cpf'] .'</div>
+                        <div class="cpf">'. formatCpf($result['cpf']) .'</div>
                         <div class="email">'. $result['email'] .'</div>
                         <div class="actions">
-                            <a href="editar-usuario.php?id=3">
+                            <a href="editar-usuario.php?id='. $result['id'] .'">
                                 <i class="fas fa-edit"></i>
                             </a>
-                            <a href="excluir-usuario.php?id=3">
+                            <a href="excluir-usuario.php?id='. $result['id'] .'">
                                 <i class="fas fa-trash-alt"></i>
                             </a>
                         </div>
