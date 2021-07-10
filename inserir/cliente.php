@@ -24,17 +24,17 @@
                         </a>
                     </li>
                     <li>
-                        <a href="../pedidos.html">
+                        <a href="../clientes.php">
                             Cliente
                         </a>
                     </li>
                     <li>
-                        <a href="../pedidos.html">
+                        <a href="../produtos.php">
                             Produto
                         </a>
                     </li>
                     <li>
-                        <a href="../pedidos.html">
+                        <a href="../pedidos.php">
                             Pedido
                         </a>
                     </li>
@@ -57,7 +57,7 @@
 
             if ($name != null && $cpf != null && $email != null) {
                 include_once('../connection.php');
-                $connection->exec("INSERT INTO cliente VALUES (DEFAULT, $name, ". unformatCpf($cpf) .", $email)");
+                $connection->exec("INSERT INTO cliente VALUES (DEFAULT, '$name', '". unformatCpf($cpf) ."', '$email')");
                 unset($connection);
                 echo "$name foi inserido com sucesso.";
             }
