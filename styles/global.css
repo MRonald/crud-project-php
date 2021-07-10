@@ -77,8 +77,6 @@ input, button, a {
 }
 .header-main .menu .menu-side ul li {
     border-bottom: 1px solid var(--contrast-light);
-    padding: 20px 40px;
-    cursor: pointer;
     transition: all .4s;
 }
 .header-main .menu .menu-side ul li:hover,
@@ -87,7 +85,12 @@ input, button, a {
     background-color: var(--contrast-light);
     color: var(--text-dark);
 }
-
+.header-main .menu .menu-side ul li a {
+    width: 100%;
+    height: 100%;
+    display: block;
+    padding: 20px 40px;
+}
 /* Conteúdo */
 .content-main {
     margin-left: auto;

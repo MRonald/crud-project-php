@@ -44,16 +44,35 @@
     </header>
     <main class="content-main" id="content-main">
         <?php
-            $name = $_POST['nome'] ?? null;
-            $cpf = $_POST['cpf'] ?? null;
-            $email = $_POST['email'] ?? null;
+            include_once('../php/handleData.php');
+            include_once('../php/connection.php');
+            if ($_GET) {
+                /*
+                 * O GET vem da listagem de clientes indicando qual
+                 * cliente o usuário quer editar.
+                 */
+                $resultQuery = $connection->query('SELECT nome_cliente FROM cliente WHERE id=' . $_GET['id']);
+                $data = $resultQuery->fetchAll();
+                echo "Atualizando dados de " . $data[0][0];
+                $id = $_GET['id'];
+            } elseif ($_POST) {
+                /*
+                 * O POST vem do formulário da própria página
+                 * com os dados que serão atualizados.
+                 * Aqui eu faço uma busca no banco de dados para que
+                 * todos os dados que não forem informados permaneçam iguais.
+                 */
+                $id = $_POST['id'] ?? null;
+                $resultQuery = $connection->query('SELECT * FROM cliente WHERE id=' . $id);
+                $dataClient = $resultQuery->fetchAll();
 
-            if ($name != null && $cpf != null && $email != null) {
-                include_once('../php/handleData.php');
-                include_once('../php/connection.php');
-                $connection->exec("INSERT INTO cliente VALUES (DEFAULT, '$name', '". unformatCpf($cpf) ."', '$email')");
+                $name = $_POST['nome'] ?? $dataClient[0]['nome_cliente'];
+                $cpf = unformatCpf($_POST['cpf']) ?? $dataClient[0]['cpf'];
+                $email = $_POST['email'] ?? $dataClient[0]['email'];
+
+                $connection->exec("UPDATE cliente SET nome_cliente='$name', cpf='$cpf', email='$email' WHERE id=$id ");
                 unset($connection);
-                echo "$name foi inserido com sucesso.";
+                echo "$name foi atualizado com sucesso.";
             }
         ?>
         <!--
@@ -61,13 +80,14 @@
         -->
         <section class="screen-register">
             <form method="POST" action="./cliente.php">
+                <input type="hidden" value="<?php echo $_GET['id'] ?? null; ?>" name="id" required/>
                 <label for="nome">Nome:</label>
-                <input type="text" id="nome" name="nome" required/>
+                <input type="text" id="nome" name="nome"/>
                 <label for="cpf">CPF:</label>
-                <input type="text" id="cpf" name="cpf" required/>
+                <input type="text" id="cpf" name="cpf"/>
                 <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required/>
-                <input type="submit" value="Cadastrar"/>
+                <input type="email" id="email" name="email"/>
+                <input type="submit" value="Atualizar"/>
             </form>
         </section>
     </main>
