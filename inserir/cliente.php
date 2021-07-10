@@ -37,6 +37,11 @@
                             Pedido
                         </a>
                     </li>
+                    <li>
+                        <a href="../migration-data">
+                            Migrar dados
+                        </a>
+                    </li>
                 </ul>
             </div>
         </nav>
@@ -66,7 +71,7 @@
                 <label for="cpf">CPF:</label>
                 <input type="text" id="cpf" name="cpf" required/>
                 <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required/>
+                <input type="email" id="email" name="email"/>
                 <input type="submit" value="Cadastrar"/>
             </form>
         </section>

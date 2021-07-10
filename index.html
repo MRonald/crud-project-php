@@ -18,23 +18,28 @@
                 <i class="fas fa-times" onclick="hideMenu()"></i>
                 <ul>
                     <li>
-                        <a href="index.html">
+                        <a href="./index.html">
                             Home
                         </a>
                     </li>
                     <li>
-                        <a href="pedidos.html">
+                        <a href="./clientes.php">
                             Cliente
                         </a>
                     </li>
                     <li>
-                        <a href="pedidos.html">
+                        <a href="./produtos.php">
                             Produto
                         </a>
                     </li>
                     <li>
-                        <a href="pedidos.html">
+                        <a href="./pedidos.php">
                             Pedido
+                        </a>
+                    </li>
+                    <li>
+                        <a href="./migration-data">
+                            Migrar dados
                         </a>
                     </li>
                 </ul>

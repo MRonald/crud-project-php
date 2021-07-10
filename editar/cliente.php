@@ -37,6 +37,11 @@
                             Pedido
                         </a>
                     </li>
+                    <li>
+                        <a href="../migration-data">
+                            Migrar dados
+                        </a>
+                    </li>
                 </ul>
             </div>
         </nav>
@@ -66,9 +71,9 @@
                 $resultQuery = $connection->query('SELECT * FROM cliente WHERE id=' . $id);
                 $dataClient = $resultQuery->fetchAll();
 
-                $name = $_POST['nome'] ?? $dataClient[0]['nome_cliente'];
-                $cpf = unformatCpf($_POST['cpf']) ?? $dataClient[0]['cpf'];
-                $email = $_POST['email'] ?? $dataClient[0]['email'];
+                $name = $_POST['nome'] != null ? $_POST['nome'] : $dataClient[0]['nome_cliente'];
+                $cpf = unformatCpf($_POST['cpf']) != null ? unformatCpf($_POST['cpf']) : $dataClient[0]['cpf'];
+                $email = $_POST['email'] != null ? $_POST['email'] : $dataClient[0]['email'];
 
                 $connection->exec("UPDATE cliente SET nome_cliente='$name', cpf='$cpf', email='$email' WHERE id=$id ");
                 unset($connection);
