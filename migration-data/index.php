@@ -4,136 +4,195 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-        body {
-            background-color: #666;
-        }
-        * {
-            font-size: 20px;
-            font-weight: bolder;
-            font-family: Arial, Helvetica, sans-serif;
-        }
-    </style>
+    <title>Home | Crud Project</title>
+    <script src="https://kit.fontawesome.com/407f74df21.js" crossorigin="anonymous"></script>
+    <script src="../scripts/menu.js" defer></script>
+    <script src="../scripts/masks.js" defer></script>
+    <link rel="stylesheet" href="../styles/global.css"/>
 </head>
 <body>
-    <pre>
-        <?php
-            ini_set('display_errors',1);
-            ini_set('display_startup_erros',1);
-            error_reporting(E_ALL);
+    <header class="header-main">
+        <nav class="menu">
+            <i class="fas fa-bars" onclick="showMenu()"></i>
+            <div class="menu-side" id="menu-side">
+                <i class="fas fa-times" onclick="hideMenu()"></i>
+                <ul>
+                    <li>
+                        <a href="../index.html">
+                            Home
+                        </a>
+                    </li>
+                    <li>
+                        <a href="../clientes.php">
+                            Cliente
+                        </a>
+                    </li>
+                    <li>
+                        <a href="../produtos.php">
+                            Produto
+                        </a>
+                    </li>
+                    <li>
+                        <a href="../pedidos.php">
+                            Pedido
+                        </a>
+                    </li>
+                    <li>
+                        <a href="../migration-data">
+                            Migrar dados
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <h1>Crud Project</h1>
+    </header>
+    <main class="content-main" id="content-main">
+        <div class="informations">
+            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cupiditate, harum, incidunt at excepturi iure, dolorem repellendus voluptate corrupti ab ullam perferendis quia. Esse blanditiis totam eaque fugit labore ab eos.</p>
 
-            $hostname = 'localhost';
-            $oldDatabaseName = 'projeto_php';
-            $newDatabaseName = 'projeto_php_estruturado';
-            $user = 'root';
-            $password = 'loginRoot';
+            <form method="GET" action="./index.php" class="form-standard">
+                <input type="hidden" value="true" name="migration">
+                <label for="hostname">Local do servidor:</label>
+                <input type="text" value="localhost" name="hostname" id="hostname" required/>
 
-            try {
-                // Conexão com o banco antigo
-                $oldDatabaseConn = new PDO("mysql:host=$hostname;dbname=$oldDatabaseName", $user, $password);
-                $oldDatabaseConn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                
-                // Conexão com o novo banco
-                $newDatabaseConn = new PDO("mysql:host=$hostname;dbname=$newDatabaseName", $user, $password);
-                $newDatabaseConn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                <label for="oldDatabase">Nome do banco antigo:</label>
+                <input type="text" value="php_migration_old" name="oldDatabase" id="oldDatabase" required/>
 
-                // Pegando os registros do banco antigo
-                $oldRegisters = $oldDatabaseConn->query("select * from pedido");
+                <label for="newDatabase">Nome do novo banco:</label>
+                <input type="text" value="php_crud_structured" name="newDatabase" id="newDatabase" required/>
 
-                foreach ($oldRegisters as $register) {
-                    // Inserindo dado do cliente
-                    $clientInsert = $newDatabaseConn->prepare("INSERT INTO cliente (nome_cliente, cpf, email) VALUES (:nome, :cpf, :email)");
-                    $clientInsert->execute(array(
-                        ":nome" => $register["nome_cliente"],
-                        ":cpf" => $register["cpf"],
-                        ":email" => $register["email"]
-                    ));
-                    echo "<p>Cliente inserido...</p>";
-                    
-                    // Inserindo dado do produto
-                    $productInsert = $newDatabaseConn->prepare(
-                        "INSERT INTO produto (cod_barras, nome_produto, valor_unitario) VALUES (:codBarras, :nomeProduto, :valorUnitario)"
-                    );
-                    $productInsert->execute(array(
-                        ":codBarras" => $register["cod_barras"],
-                        ":nomeProduto" => $register["nome_produto"],
-                        ":valorUnitario" => $register["valor_unitario"]
-                    ));
-                    echo "<p>Produto inserido...</p>";
-                }
+                <label for="user">Usuário do banco:</label>
+                <input type="text" value="root" name="user" id="user" required/>
 
-                echo "<hr />";
-            } catch (PDOException $e) {
-                echo "Falha no erro :C - " . $e->getMessage(); 
-            } finally {
-                $oldDatabaseConn = null;
-                $newDatabaseConn = null;
-            }
+                <label for="password">Senha do banco*:</label>
+                <input type="password" placeholder="password" name="password" id="password" required/>
 
-            // Inserindo dados do pedido
-            try {
-                // Conexão com o banco antigo
-                $oldDatabaseConn = new PDO("mysql:host=$hostname;dbname=$oldDatabaseName", $user, $password);
-                $oldDatabaseConn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                
-                // Conexão com o novo banco
-                $newDatabaseConn = new PDO("mysql:host=$hostname;dbname=$newDatabaseName", $user, $password);
-                $newDatabaseConn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                <input type="submit" value="Fazer migração"/>
 
-                // Pegando os registros do banco antigo
-                $oldRegisters = $oldDatabaseConn->query("select * from pedido");
+                <p class="detail">
+                    *Caso esteja usando o XAMPP, deixe vazio.
+                </p>
+            </form>
+        </div>
+        <!-- <?php
+            if ($_GET['migration'] == 'true') {
+                ini_set('display_errors',1);
+                ini_set('display_startup_erros',1);
+                error_reporting(E_ALL);
 
-                
-                foreach ($oldRegisters as $register) {
-                    // Inserindo dado do pedido
-                    $orderInsert = $newDatabaseConn->prepare(
-                        "INSERT INTO pedido (data_pedido, id_cliente, id_produto, quantidade) VALUES (:dataPedido, :idCliente, :idProduto, :quantidade)"
-                    );
+                $hostname = 'localhost';
+                $oldDatabaseName = 'projeto_php';
+                $newDatabaseName = 'projeto_php_estruturado';
+                $user = 'root';
+                $password = 'loginRoot';
 
-                    // Recuperando id do cliente através do cpf
-                    $resultQuery = $newDatabaseConn->query("select id from cliente where cpf = " . $register["cpf"]);
-                    $idCliente;
-                    foreach ($resultQuery as $result) {
-                        $idCliente = $result["id"];
+                try {
+                    // Conexão com o banco antigo
+                    $oldDatabaseConn = new PDO("mysql:host=$hostname;dbname=$oldDatabaseName", $user, $password);
+                    $oldDatabaseConn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                    // Conexão com o novo banco
+                    $newDatabaseConn = new PDO("mysql:host=$hostname;dbname=$newDatabaseName", $user, $password);
+                    $newDatabaseConn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                    // Pegando os registros do banco antigo
+                    $oldRegisters = $oldDatabaseConn->query("select * from pedido");
+
+                    foreach ($oldRegisters as $register) {
+                        // Inserindo dado do cliente
+                        $clientInsert = $newDatabaseConn->prepare("INSERT INTO cliente (nome_cliente, cpf, email) VALUES (:nome, :cpf, :email)");
+                        $clientInsert->execute(array(
+                            ":nome" => $register["nome_cliente"],
+                            ":cpf" => $register["cpf"],
+                            ":email" => $register["email"]
+                        ));
+                        echo "<p>Cliente inserido...</p>";
+
+                        // Inserindo dado do produto
+                        $productInsert = $newDatabaseConn->prepare(
+                            "INSERT INTO produto (cod_barras, nome_produto, valor_unitario) VALUES (:codBarras, :nomeProduto, :valorUnitario)"
+                        );
+                        $productInsert->execute(array(
+                            ":codBarras" => $register["cod_barras"],
+                            ":nomeProduto" => $register["nome_produto"],
+                            ":valorUnitario" => $register["valor_unitario"]
+                        ));
+                        echo "<p>Produto inserido...</p>";
                     }
 
-                    // Recuperando id do produto através do código de barras
-                    $resultQuery = $newDatabaseConn->query("select id from produto where cod_barras = " . $register["cod_barras"]);
-                    $idProduto;
-                    foreach ($resultQuery as $result) {
-                        $idProduto = $result["id"];
+                    echo "<hr />";
+                } catch (PDOException $e) {
+                    echo "Falha no erro :C - " . $e->getMessage();
+                } finally {
+                    $oldDatabaseConn = null;
+                    $newDatabaseConn = null;
+                }
+
+                // Inserindo dados do pedido
+                try {
+                    // Conexão com o banco antigo
+                    $oldDatabaseConn = new PDO("mysql:host=$hostname;dbname=$oldDatabaseName", $user, $password);
+                    $oldDatabaseConn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                    // Conexão com o novo banco
+                    $newDatabaseConn = new PDO("mysql:host=$hostname;dbname=$newDatabaseName", $user, $password);
+                    $newDatabaseConn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                    // Pegando os registros do banco antigo
+                    $oldRegisters = $oldDatabaseConn->query("select * from pedido");
+
+
+                    foreach ($oldRegisters as $register) {
+                        // Inserindo dado do pedido
+                        $orderInsert = $newDatabaseConn->prepare(
+                            "INSERT INTO pedido (data_pedido, id_cliente, id_produto, quantidade) VALUES (:dataPedido, :idCliente, :idProduto, :quantidade)"
+                        );
+
+                        // Recuperando id do cliente através do cpf
+                        $resultQuery = $newDatabaseConn->query("select id from cliente where cpf = " . $register["cpf"]);
+                        $idCliente;
+                        foreach ($resultQuery as $result) {
+                            $idCliente = $result["id"];
+                        }
+
+                        // Recuperando id do produto através do código de barras
+                        $resultQuery = $newDatabaseConn->query("select id from produto where cod_barras = " . $register["cod_barras"]);
+                        $idProduto;
+                        foreach ($resultQuery as $result) {
+                            $idProduto = $result["id"];
+                        }
+
+                        $orderInsert->execute(array(
+                            ":dataPedido" => $register["dt_pedido"],
+                            ":idCliente" => $idCliente,
+                            ":idProduto" => $idProduto,
+                            ":quantidade" => $register["quantidade"]
+                        ));
+                        echo "<p>Pedido inserido...</p>";
                     }
 
-                    $orderInsert->execute(array(
-                        ":dataPedido" => $register["dt_pedido"],
-                        ":idCliente" => $idCliente,
-                        ":idProduto" => $idProduto,
-                        ":quantidade" => $register["quantidade"]
-                    ));
-                    echo "<p>Pedido inserido...</p>";
-                }
+                    echo "<hr /> <p>Select de todos os dados no novo banco</p>";
 
-                echo "<hr /> <p>Select de todos os dados no novo banco</p>";
-                
-                // Testando conexão com o novo banco
-                $newData = $newDatabaseConn->query("
-                    select p.numero_pedido, p.data_pedido, c.nome_cliente, pr.nome_produto, pr.valor_unitario, p.quantidade
-                    from pedido p 
-                    join cliente c on p.id_cliente = c.id 
-                    join produto pr on p.id_produto = pr.id;
-                ");
+                    // Testando conexão com o novo banco
+                    $newData = $newDatabaseConn->query("
+                        select p.numero_pedido, p.data_pedido, c.nome_cliente, pr.nome_produto, pr.valor_unitario, p.quantidade
+                        from pedido p
+                        join cliente c on p.id_cliente = c.id
+                        join produto pr on p.id_produto = pr.id;
+                    ");
 
-                foreach ($newData as $result) {
-                    print_r($result);
+                    foreach ($newData as $result) {
+                        print_r($result);
+                    }
+                } catch (PDOException $e) {
+                    echo "Falha no erro :C - " . $e->getMessage();
+                } finally {
+                    $oldDatabaseConn = null;
+                    $newDatabaseConn = null;
                 }
-            } catch (PDOException $e) {
-                echo "Falha no erro :C - " . $e->getMessage(); 
-            } finally {
-                $oldDatabaseConn = null;
-                $newDatabaseConn = null;
             }
-        ?>
-    </pre>
+        ?> -->
+    </main>
 </body>
 </html>
