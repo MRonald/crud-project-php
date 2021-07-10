@@ -1,17 +1,4 @@
 /* Conteúdo */
-.content-main .title-section {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 2px solid var(--gray-dark);
-    padding: 0 20px;
-}
-.content-main .title-section > i {
-    margin-bottom: 10px;
-}
-.content-main .title-section > span {
-    font-size: 15pt;
-}
 .content-main .links-section {
     padding: 30px 20px;
     display: flex;
