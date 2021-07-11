@@ -84,7 +84,7 @@
             Criar classe para formatar o formulário
         -->
         <section class="screen-register">
-            <form method="POST" action="./cliente.php">
+            <form method="POST" action="./cliente.php" class="form-standard">
                 <input type="hidden" value="<?php echo $_GET['id'] ?? null; ?>" name="id" required/>
                 <label for="nome">Nome:</label>
                 <input type="text" id="nome" name="nome"/>
