@@ -58,24 +58,29 @@
             include_once('./php/handleData.php');
             include_once('./php/connection.php');
 
-            $resultsClients = $connection->query('SELECT * FROM cliente');
+            $resultsSelect = $connection->query('SELECT * FROM cliente');
+            $clients = $resultsSelect->fetchAll();
 
-            foreach ($resultsClients as $result) {
+            if (empty($clients)) {
+                echo "<p class='messageUser'>Nenhum cliente cadastrado.</p>";
+            } else {
+                foreach ($clients as $client) {
                 echo '
-                    <div class="result-data">
-                        <div class="name">'. $result['nome_cliente'] .'</div>
-                        <div class="cpf">'. formatCpf($result['cpf']) .'</div>
-                        <div class="email">'. $result['email'] .'</div>
-                        <div class="actions">
-                            <a href="./editar/cliente.php?id='. $result['id'] .'">
-                                <i class="fas fa-edit"></i>
-                            </a>
-                            <a href="./apagar/cliente.php?id='. $result['id'] .'">
-                                <i class="fas fa-trash-alt"></i>
-                            </a>
+                        <div class="result-data">
+                            <div class="name">'. $client['nome_cliente'] .'</div>
+                            <div class="cpf">'. formatCpf($client['cpf']) .'</div>
+                            <div class="email">'. $client['email'] .'</div>
+                            <div class="actions">
+                                <a href="./editar/cliente.php?id='. $client['id'] .'">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a href="./apagar/cliente.php?id='. $client['id'] .'">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
+                            </div>
                         </div>
-                    </div>
-                ';
+                    ';
+                }
             }
 
             unset($connection);

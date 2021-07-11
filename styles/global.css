@@ -56,12 +56,11 @@ input, button, a {
 .header-main .menu .menu-side {
     position: absolute;
     top: 0;
-    left: 0;
+    left: -20vw;
     height: 100vh;
     width: 20vw;
     background-color: var(--background-dark);
     transition: transform 1s;
-    transform: translateX(-100%);
     text-align: right;
 }
 .header-main .menu .menu-side > i {
