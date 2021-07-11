@@ -65,7 +65,7 @@
             Criar classe para formatar o formulário
         -->
         <section class="screen-register">
-            <form method="POST" action="./cliente.php">
+            <form method="POST" action="./cliente.php" class="form-standard">
                 <label for="nome">Nome:</label>
                 <input type="text" id="nome" name="nome" required/>
                 <label for="cpf">CPF:</label>
