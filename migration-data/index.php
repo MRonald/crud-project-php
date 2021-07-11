@@ -9,6 +9,7 @@
     <script src="../scripts/menu.js" defer></script>
     <script src="../scripts/masks.js" defer></script>
     <link rel="stylesheet" href="../styles/global.css"/>
+    <link rel="stylesheet" href="../styles/migration.css"/>
 </head>
 <body>
     <header class="header-main">
@@ -49,43 +50,17 @@
     </header>
     <main class="content-main" id="content-main">
         <div class="informations">
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cupiditate, harum, incidunt at excepturi iure, dolorem repellendus voluptate corrupti ab ullam perferendis quia. Esse blanditiis totam eaque fugit labore ab eos.</p>
-
-            <form method="GET" action="./index.php" class="form-standard">
-                <input type="hidden" value="true" name="migration">
-                <label for="hostname">Local do servidor:</label>
-                <input type="text" value="localhost" name="hostname" id="hostname" required/>
-
-                <label for="oldDatabase">Nome do banco antigo:</label>
-                <input type="text" value="php_migration_old" name="oldDatabase" id="oldDatabase" required/>
-
-                <label for="newDatabase">Nome do novo banco:</label>
-                <input type="text" value="php_crud_structured" name="newDatabase" id="newDatabase" required/>
-
-                <label for="user">Usuário do banco:</label>
-                <input type="text" value="root" name="user" id="user" required/>
-
-                <label for="password">Senha do banco*:</label>
-                <input type="password" placeholder="password" name="password" id="password" required/>
-
-                <input type="submit" value="Fazer migração"/>
-
-                <p class="detail">
-                    *Caso esteja usando o XAMPP, deixe vazio.
-                </p>
-            </form>
-        </div>
-        <!-- <?php
-            if ($_GET['migration'] == 'true') {
+        <?php
+            if ($_POST) {
                 ini_set('display_errors',1);
                 ini_set('display_startup_erros',1);
                 error_reporting(E_ALL);
 
-                $hostname = 'localhost';
-                $oldDatabaseName = 'projeto_php';
-                $newDatabaseName = 'projeto_php_estruturado';
-                $user = 'root';
-                $password = 'loginRoot';
+                $hostname = $_POST['hostname'] ?? 'localhost';
+                $oldDatabaseName = $_POST['oldDatabase'] ?? 'projeto_php';
+                $newDatabaseName = $_POST['newDatabase'] ?? 'projeto_php_estruturado';
+                $user = $_POST['user'] ?? 'root';
+                $password = $_POST['password'] ?? null;
 
                 try {
                     // Conexão com o banco antigo
@@ -107,7 +82,6 @@
                             ":cpf" => $register["cpf"],
                             ":email" => $register["email"]
                         ));
-                        echo "<p>Cliente inserido...</p>";
 
                         // Inserindo dado do produto
                         $productInsert = $newDatabaseConn->prepare(
@@ -118,12 +92,10 @@
                             ":nomeProduto" => $register["nome_produto"],
                             ":valorUnitario" => $register["valor_unitario"]
                         ));
-                        echo "<p>Produto inserido...</p>";
                     }
 
-                    echo "<hr />";
                 } catch (PDOException $e) {
-                    echo "Falha no erro :C - " . $e->getMessage();
+                    echo "<div class='message-migration error'><p>Falha no erro :C - " . $e->getMessage() . "</p>";
                 } finally {
                     $oldDatabaseConn = null;
                     $newDatabaseConn = null;
@@ -169,10 +141,7 @@
                             ":idProduto" => $idProduto,
                             ":quantidade" => $register["quantidade"]
                         ));
-                        echo "<p>Pedido inserido...</p>";
                     }
-
-                    echo "<hr /> <p>Select de todos os dados no novo banco</p>";
 
                     // Testando conexão com o novo banco
                     $newData = $newDatabaseConn->query("
@@ -182,17 +151,50 @@
                         join produto pr on p.id_produto = pr.id;
                     ");
 
-                    foreach ($newData as $result) {
-                        print_r($result);
+                    if (!empty($newData->fetchAll())) {
+                        echo "<div class='message-migration success'><p>Migração concluída com sucesso!</p></div>";
                     }
                 } catch (PDOException $e) {
-                    echo "Falha no erro :C - " . $e->getMessage();
+                    echo "<p>Falha no erro :C - " . $e->getMessage() . "</p></div>";
                 } finally {
                     $oldDatabaseConn = null;
                     $newDatabaseConn = null;
                 }
             }
-        ?> -->
+        ?>
+            <p>Este formulário irá usar os dados informados sobre a conexão e os bancos de dados para rodar um script que irá migrar todos os dados do banco não estruturado para o novo banco estruturado. Esse script só reconhece um padrão definido de modelagem dos dados.</p>
+
+            <form method="POST" action="../migration-data/index.php" class="form-standard" style="width: 60%;">
+                <label for="hostname">Local do servidor:</label>
+                <input type="text" value="localhost" name="hostname" id="hostname" required/>
+
+                <label for="oldDatabase">Nome do banco antigo:</label>
+                <input type="text" value="php_migration_old" name="oldDatabase" id="oldDatabase" required/>
+
+                <label for="newDatabase">Nome do novo banco:</label>
+                <input type="text" value="php_crud_structured" name="newDatabase" id="newDatabase" required/>
+
+                <label for="user">Usuário do banco:</label>
+                <input type="text" value="root" name="user" id="user" required/>
+
+                <label for="password">Senha do banco*:</label>
+                <input type="password" placeholder="password" name="password" id="password"/>
+
+                <input type="submit" value="Fazer migração"/>
+
+                <p class="detail">
+                    *Caso esteja usando o XAMPP, deixe vazio.
+                </p>
+            </form>
+
+            <p>Para testar a migração dos dados baixe e execute os dois dumps num arquivo zip clicando no link abaixo.</p>
+            <p class="plink">
+                <a href="../_dumps/dumps-project.zip" download>
+                    <i class="fas fa-file-archive"></i>
+                    Download zip
+                </a>
+            </p>
+        </div>
     </main>
 </body>
 </html>

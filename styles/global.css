@@ -5,6 +5,8 @@
     --background-dark: #313131;
     --contrast-light: #dfdfdf;
     --gray-dark: #666;
+    --error: rgb(255, 108, 108);
+    --success: rgb(142, 255, 108);
 }
 * {
     margin: 0;

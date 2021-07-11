@@ -1,0 +1,29 @@
+.informations {
+    width: 60%;
+    margin: auto;
+}
+.informations > p {
+    margin: 15px auto;
+    text-align: justify;
+}
+.informations .plink {
+    margin-top: 20px;
+}
+.informations .plink > a {
+    background-color: var(--background-dark);
+    border: 1px solid var(--contrast-light);
+    color: var(--contrast-light);
+    padding: 20px;
+    border-radius: 5px;
+}
+.informations .message-migration {
+    border: 1px solid var(--background-dark);
+    border-radius: 15px;
+    padding: 10px;
+}
+.informations .error {
+    background-color: var(--error);
+}
+.informations .success {
+    background-color: var(--success);
+}
