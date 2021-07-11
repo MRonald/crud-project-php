@@ -62,6 +62,7 @@
                 $user = $_POST['user'] ?? 'root';
                 $password = $_POST['password'] ?? null;
 
+                echo "<div class='message-migration'>";
                 try {
                     // Conexão com o banco antigo
                     $oldDatabaseConn = new PDO("mysql:host=$hostname;dbname=$oldDatabaseName", $user, $password);
@@ -95,7 +96,7 @@
                     }
 
                 } catch (PDOException $e) {
-                    echo "<div class='message-migration error'><p>Falha no erro :C - " . $e->getMessage() . "</p>";
+                    echo "";
                 } finally {
                     $oldDatabaseConn = null;
                     $newDatabaseConn = null;
@@ -152,14 +153,15 @@
                     ");
 
                     if (!empty($newData->fetchAll())) {
-                        echo "<div class='message-migration success'><p>Migração concluída com sucesso!</p></div>";
+                        echo "<p class='success'>Migração concluída com sucesso!</p>";
                     }
                 } catch (PDOException $e) {
-                    echo "<p>Falha no erro :C - " . $e->getMessage() . "</p></div>";
+                    echo "<p class='error'>Falha no erro :C - " . $e->getMessage() . "</p>";
                 } finally {
                     $oldDatabaseConn = null;
                     $newDatabaseConn = null;
                 }
+                echo "</div>";
             }
         ?>
             <p>Este formulário irá usar os dados informados sobre a conexão e os bancos de dados para rodar um script que irá migrar todos os dados do banco não estruturado para o novo banco estruturado. Esse script só reconhece um padrão definido de modelagem dos dados.</p>

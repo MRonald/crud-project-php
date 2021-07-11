@@ -19,11 +19,13 @@
 .informations .message-migration {
     border: 1px solid var(--background-dark);
     border-radius: 15px;
-    padding: 10px;
+    overflow: hidden;
 }
 .informations .error {
     background-color: var(--error);
+    padding: 10px;
 }
 .informations .success {
     background-color: var(--success);
+    padding: 10px;
 }
