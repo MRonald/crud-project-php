@@ -1,8 +1,8 @@
-drop database if exists projeto_php_estruturado;
+drop database if exists php_crud_structured;
 
-create database if not exists projeto_php_estruturado;
+create database if not exists php_crud_structured;
 
-use projeto_php_estruturado;
+use php_crud_structured;
 
 drop table if exists cliente;
 

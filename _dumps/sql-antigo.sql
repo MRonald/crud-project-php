@@ -1,8 +1,8 @@
-drop database if exists projeto_php;
+drop database if exists php_migration_old;
 
-create database if not exists projeto_php;
+create database if not exists php_migration_old;
 
-use projeto_php;
+use php_migration_old;
 
 drop table if exists pedido;
 

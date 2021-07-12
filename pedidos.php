@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<<<<<<< HEAD
 
-=======
->>>>>>> 560187c38e65655cc332e95e4d858c525b14035b
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,17 +8,11 @@
     <title>Home | Crud Project</title>
     <script src="https://kit.fontawesome.com/407f74df21.js" crossorigin="anonymous"></script>
     <script src="scripts/menu.js" defer></script>
-<<<<<<< HEAD
     <link rel="stylesheet" href="styles/global.css" />
     <link rel="stylesheet" href="styles/tabela-dados.css" />
 </head>
 
 
-=======
-    <link rel="stylesheet" href="styles/global.css"/>
-    <link rel="stylesheet" href="styles/tabela-dados.css"/>
-</head>
->>>>>>> 560187c38e65655cc332e95e4d858c525b14035b
 <body>
     <header class="header-main">
         <nav class="menu">
@@ -66,7 +57,6 @@
             <div class="email">Email</div>
             <div class="actions">Ações</div>
         </div>
-<<<<<<< HEAD
         <!-- <div class="result-data">
             <div class="name">Michael Ronald</div>
             <div class="cpf">654.915.632-65</div>
@@ -124,39 +114,3 @@
 =======
 </html>
 >>>>>>> 560187c38e65655cc332e95e4d858c525b14035b:pedidos.php
-=======
-        <?php
-            include_once('./php/handleData.php');
-            include_once('./php/connection.php');
-
-            $resultsSelect = $connection->query('SELECT * FROM cliente');
-            $clients = $resultsSelect->fetchAll();
-
-            if (empty($clients)) {
-                echo "<p class='messageUser'>Nenhum cliente cadastrado.</p>";
-            } else {
-                foreach ($clients as $client) {
-                echo '
-                        <div class="result-data">
-                            <div class="name">'. $client['nome_cliente'] .'</div>
-                            <div class="cpf">'. formatCpf($client['cpf']) .'</div>
-                            <div class="email">'. $client['email'] .'</div>
-                            <div class="actions">
-                                <a href="./editar/cliente.php?id='. $client['id'] .'">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <a href="./apagar/cliente.php?id='. $client['id'] .'">
-                                    <i class="fas fa-trash-alt"></i>
-                                </a>
-                            </div>
-                        </div>
-                    ';
-                }
-            }
-
-            unset($connection);
-        ?>
-    </main>
-</body>
-</html>
->>>>>>> 560187c38e65655cc332e95e4d858c525b14035b
