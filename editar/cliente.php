@@ -48,43 +48,41 @@
         <h1>Crud Project</h1>
     </header>
     <main class="content-main" id="content-main">
-        <?php
-            include_once('../php/handleData.php');
-            include_once('../php/connection.php');
-            if ($_GET) {
-                /*
-                 * O GET vem da listagem de clientes indicando qual
-                 * cliente o usuário quer editar.
-                 */
-                $resultQuery = $connection->query('SELECT nome_cliente FROM cliente WHERE id=' . $_GET['id']);
-                $data = $resultQuery->fetchAll();
-                echo "Atualizando dados de " . $data[0][0];
-                $id = $_GET['id'];
-            } elseif ($_POST) {
-                /*
-                 * O POST vem do formulário da própria página
-                 * com os dados que serão atualizados.
-                 * Aqui eu faço uma busca no banco de dados para que
-                 * todos os dados que não forem informados permaneçam iguais.
-                 */
-                $id = $_POST['id'] ?? null;
-                $resultQuery = $connection->query('SELECT * FROM cliente WHERE id=' . $id);
-                $dataClient = $resultQuery->fetchAll();
-
-                $name = $_POST['nome'] != null ? $_POST['nome'] : $dataClient[0]['nome_cliente'];
-                $cpf = unformatCpf($_POST['cpf']) != null ? unformatCpf($_POST['cpf']) : $dataClient[0]['cpf'];
-                $email = $_POST['email'] != null ? $_POST['email'] : $dataClient[0]['email'];
-
-                $connection->exec("UPDATE cliente SET nome_cliente='$name', cpf='$cpf', email='$email' WHERE id=$id ");
-                unset($connection);
-                echo "$name foi atualizado com sucesso.";
-            }
-        ?>
-        <!--
-            Criar classe para formatar o formulário
-        -->
         <section class="screen-register">
             <form method="POST" action="./cliente.php" class="form-standard">
+                <?php
+                    include_once('../php/handleData.php');
+                    include_once('../php/connection.php');
+                    if ($_GET) {
+                        /*
+                        * O GET vem da listagem de clientes indicando qual
+                        * cliente o usuário quer editar.
+                        */
+                        $resultQuery = $connection->query('SELECT nome_cliente FROM cliente WHERE id=' . $_GET['id']);
+                        $data = $resultQuery->fetchAll();
+                        echo "<div class='message-wrapper'><p class='generic'>Atualizando dados de " . $data[0][0] . "</p></div>";
+                        $id = $_GET['id'];
+                    } elseif ($_POST) {
+                        /*
+                        * O POST vem do formulário da própria página
+                        * com os dados que serão atualizados.
+                        * Aqui eu faço uma busca no banco de dados para que
+                        * todos os dados que não forem informados permaneçam iguais.
+                        */
+                        $id = $_POST['id'] ?? null;
+                        $resultQuery = $connection->query('SELECT * FROM cliente WHERE id=' . $id);
+                        $dataClient = $resultQuery->fetchAll();
+
+                        $name = $_POST['nome'] != null ? $_POST['nome'] : $dataClient[0]['nome_cliente'];
+                        $cpf = unformatCpf($_POST['cpf']) != null ? unformatCpf($_POST['cpf']) : $dataClient[0]['cpf'];
+                        $email = $_POST['email'] != null ? $_POST['email'] : $dataClient[0]['email'];
+
+                        $connection->exec("UPDATE cliente SET nome_cliente='$name', cpf='$cpf', email='$email' WHERE id=$id ");
+                        unset($connection);
+                        echo "<div class='message-wrapper'><p class='success'>$name foi atualizado com sucesso.</p></div>";
+                    }
+                ?>
+
                 <input type="hidden" value="<?php echo $_GET['id'] ?? null; ?>" name="id" required/>
                 <label for="nome">Nome:</label>
                 <input type="text" id="nome" name="nome"/>

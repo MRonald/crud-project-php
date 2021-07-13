@@ -16,16 +16,3 @@
     padding: 20px;
     border-radius: 5px;
 }
-.informations .message-migration {
-    border: 1px solid var(--background-dark);
-    border-radius: 15px;
-    overflow: hidden;
-}
-.informations .error {
-    background-color: var(--error);
-    padding: 10px;
-}
-.informations .success {
-    background-color: var(--success);
-    padding: 10px;
-}

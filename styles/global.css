@@ -153,3 +153,20 @@ input, button, a {
     margin-top: 20px;
     font-size: .8rem;
 }
+/* Mensagem de sucesso ou erro */
+.message-migration, .message-wrapper {
+    border: 1px solid var(--background-dark);
+    border-radius: 15px;
+    overflow: hidden;
+}
+.error {
+    background-color: var(--error);
+    padding: 10px;
+}
+.success {
+    background-color: var(--success);
+    padding: 10px;
+}
+.generic {
+    padding: 10px;
+}

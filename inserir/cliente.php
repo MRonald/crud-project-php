@@ -48,24 +48,22 @@
         <h1>Crud Project</h1>
     </header>
     <main class="content-main" id="content-main">
-        <?php
-            $name = $_POST['nome'] ?? null;
-            $cpf = $_POST['cpf'] ?? null;
-            $email = $_POST['email'] ?? null;
-
-            if ($name != null && $cpf != null && $email != null) {
-                include_once('../php/handleData.php');
-                include_once('../php/connection.php');
-                $connection->exec("INSERT INTO cliente VALUES (DEFAULT, '$name', '". unformatCpf($cpf) ."', '$email')");
-                unset($connection);
-                echo "$name foi inserido com sucesso.";
-            }
-        ?>
-        <!--
-            Criar classe para formatar o formulário
-        -->
         <section class="screen-register">
             <form method="POST" action="./cliente.php" class="form-standard">
+                <?php
+                    if ($_POST) {
+                        $name = $_POST['nome'] ?? null;
+                        $cpf = $_POST['cpf'] ?? null;
+                        $email = $_POST['email'] ?? null;
+
+                        include_once('../php/handleData.php');
+                        include_once('../php/connection.php');
+                        $connection->exec("INSERT INTO cliente VALUES (DEFAULT, '$name', '". unformatCpf($cpf) ."', '$email')");
+                        unset($connection);
+                        echo "<div class='message-wrapper'><p class='success'>$name foi inserido com sucesso.</p></div>";
+                    }
+                ?>
+
                 <label for="nome">Nome:</label>
                 <input type="text" id="nome" name="nome" required/>
                 <label for="cpf">CPF:</label>
