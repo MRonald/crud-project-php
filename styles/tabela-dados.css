@@ -16,7 +16,9 @@
     width: 35%;
 }
 .content-main .titles-data .cpf,
-.content-main .result-data .cpf {
+.content-main .result-data .cpf,
+.content-main .titles-data .code,
+.content-main .result-data .code {
     width: 20%;
 }
 .content-main .titles-data .cpf {
@@ -24,7 +26,9 @@
     border-right: 1px solid var(--gray-dark);
 }
 .content-main .titles-data .email,
-.content-main .result-data .email {
+.content-main .result-data .email,
+.content-main .titles-data .valueUnit,
+.content-main .result-data .valueUnit {
     width: 30%;
 }
 .content-main .titles-data .email {

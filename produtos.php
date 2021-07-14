@@ -50,49 +50,41 @@
     <main class="content-main" id="content-main">
         <div class="titles-data">
             <div class="name">Nome</div>
-            <div class="cpf">CPF</div>
-            <div class="email">Email</div>
+            <div class="code">Código de Barras</div>
+            <div class="valueUnit">Valor Unitário</div>
             <div class="actions">Ações</div>
         </div>
-        <div class="result-data">
-            <div class="name">Michael Ronald</div>
-            <div class="cpf">654.915.632-65</div>
-            <div class="email">meuemail@gmail.com</div>
-            <div class="actions">
-                <a href="editar-usuario.php?id=3">
-                    <i class="fas fa-edit"></i>
-                </a>
-                <a href="excluir-usuario.php?id=3">
-                    <i class="fas fa-trash-alt"></i>
-                </a>
-            </div>
-        </div>
-        <div class="result-data">
-            <div class="name">Michael Ronald</div>
-            <div class="cpf">654.915.632-65</div>
-            <div class="email">meuemail@gmail.com</div>
-            <div class="actions">
-                <a href="editar-usuario.php?id=3">
-                    <i class="fas fa-edit"></i>
-                </a>
-                <a href="excluir-usuario.php?id=3">
-                    <i class="fas fa-trash-alt"></i>
-                </a>
-            </div>
-        </div>
-        <div class="result-data">
-            <div class="name">Michael Ronald</div>
-            <div class="cpf">654.915.632-65</div>
-            <div class="email">meuemail@gmail.com</div>
-            <div class="actions">
-                <a href="editar-usuario.php?id=3">
-                    <i class="fas fa-edit"></i>
-                </a>
-                <a href="excluir-usuario.php?id=3">
-                    <i class="fas fa-trash-alt"></i>
-                </a>
-            </div>
-        </div>
+        <?php
+            include_once('./php/handleData.php');
+            include_once('./php/connection.php');
+
+            $resultsSelect = $connection->query('SELECT * FROM produto');
+            $products = $resultsSelect->fetchAll();
+
+            if (empty($products)) {
+                echo "<p class='messageUser'>Nenhum produto cadastrado.</p>";
+            } else {
+                foreach ($products as $product) {
+                echo '
+                        <div class="result-data">
+                            <div class="name">'. $product['nome_produto'] .'</div>
+                            <div class="cpf">'. $product['cod_barras'] .'</div>
+                            <div class="email">'. formatMoneyValue($product['valor_unitario']) .'</div>
+                            <div class="actions">
+                                <a href="./editar/produto.php?id='. $product['id'] .'">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a href="./apagar/produto.php?id='. $product['id'] .'">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
+                            </div>
+                        </div>
+                    ';
+                }
+            }
+
+            unset($connection);
+        ?>
     </main>
 </body>
 </html>

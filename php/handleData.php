@@ -18,3 +18,14 @@
 
         return $cpfFormated;
     }
+
+    function unformatMoneyValue($value) {
+        $value = str_replace(".", "", $value);
+        $value = str_replace(",", ".", $value);
+        $value = str_replace("R$ ", "", $value);
+        return $value;
+    }
+
+    function formatMoneyValue($value) {
+        return 'R$ ' . number_format($value, 2, ',', '.');
+    }
