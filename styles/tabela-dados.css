@@ -38,6 +38,32 @@
 .content-main .result-data .actions {
     width: 15%;
 }
+.content-main .titles-data .date,
+.content-main .result-data .date {
+    width: 15%;
+}
+.content-main .titles-data .client,
+.content-main .result-data .client,
+.content-main .titles-data .product,
+.content-main .result-data .product {
+    width: 17%;
+}
+.content-main .titles-data .amount,
+.content-main .result-data .amount {
+    width: 10%;
+}
+.content-main .titles-data .unitary-value,
+.content-main .result-data .unitary-value {
+    width: 15%;
+}
+.content-main .titles-data .total,
+.content-main .result-data .total {
+    width: 15%;
+}
+.content-main .titles-data .actions-order,
+.content-main .result-data .actions-order {
+    width: 10%;
+}
 /* Mensagem de erro de conexão ou caso não haja nenhum registro */
 .messageUser {
     margin-top: 50px;

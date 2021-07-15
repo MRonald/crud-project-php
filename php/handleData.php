@@ -29,3 +29,11 @@
     function formatMoneyValue($value) {
         return 'R$ ' . number_format($value, 2, ',', '.');
     }
+
+    function formatDate($date) {
+        return $date;
+    }
+
+    function calcTotal($unityValue, $amount) {
+        return formatMoneyValue(floatval($unityValue) * intval($amount));
+    }
