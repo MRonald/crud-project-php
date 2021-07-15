@@ -51,46 +51,27 @@
         <section class="screen-register">
             <form method="POST" action="./produto.php" class="form-standard">
                 <?php
-                    include_once('../php/handleData.php');
-                    include_once('../php/connection.php');
-                    if ($_GET) {
-                        /*
-                         * O GET vem da listagem de clientes indicando qual
-                         * produto o usuário quer editar.
-                         */
-                        $resultQuery = $connection->query('SELECT id, nome_produto FROM produto WHERE id=' . $_GET['id']);
-                        $data = $resultQuery->fetchAll();
-                        echo "<div class='message-wrapper'><p class='generic'>Atualizando dados do produto " . $data[0]['id'] . " (" . $data[0]['nome_produto'] . ")</p></div>";
-                        // $id = $_GET['id']; @APAGAR@
-                    } elseif ($_POST) {
-                        /*
-                         * O POST vem do formulário da própria página
-                         * com os dados que serão atualizados.
-                         * Aqui eu faço uma busca no banco de dados para que
-                         * todos os dados que não forem informados permaneçam iguais.
-                         */
-                        $id = $_POST['id'] ?? null;
-                        $resultQuery = $connection->query('SELECT * FROM produto WHERE id=' . $id);
-                        $dataProduct = $resultQuery->fetchAll();
+                    if ($_POST) {
+                        $name = $_POST['name'] ?? null;
+                        $code = $_POST['code'] ?? null;
+                        $value = $_POST['value'] ?? null;
 
-                        $code = $_POST['code'] != null ? $_POST['code'] : $dataProduct[0]['cod_barras'];
-                        $value = unformatMoneyValue($_POST['valueMoney']) != null ? unformatMoneyValue($_POST['valueMoney']) : $dataProduct[0]['valor_unitario'];
-                        $name = $_POST['name'] != null ? $_POST['name'] : $dataProduct[0]['nome_produto'];
-
-                        $connection->exec("UPDATE produto SET nome_produto='$name', cod_barras='$code', valor_unitario='$value' WHERE id=$id ");
+                        include_once('../php/handleData.php');
+                        include_once('../php/connection.php');
+                        // echo "INSERT INTO produto VALUES (DEFAULT, '$code', '$name', " . unformatMoneyValue($value) . ")";
+                        $connection->exec("INSERT INTO produto VALUES (DEFAULT, '$code', '$name', " . unformatMoneyValue($value) . ")");
                         unset($connection);
-                        echo "<div class='message-wrapper'><p class='success'>Produto $id atualizado com sucesso.</p></div>";
+                        echo "<div class='message-wrapper'><p class='success'>$name foi inserido com sucesso.</p></div>";
                     }
                 ?>
 
-                <input type="hidden" value="<?php echo $_GET['id'] ?? null; ?>" name="id" required/>
                 <label for="nome">Nome:</label>
                 <input type="text" id="name" name="name" maxlength="255"/>
                 <label for="code">Código de barras:</label>
                 <input type="text" id="code" name="code" maxlength="40"/>
                 <label for="value">Valor Unitário:</label>
                 <input type="text" id="valueMoney" name="value" maxlength="13"/>
-                <input type="submit" value="Atualizar"/>
+                <input type="submit" value="Cadastrar"/>
             </form>
         </section>
     </main>
