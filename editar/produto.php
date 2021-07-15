@@ -55,13 +55,12 @@
                     include_once('../php/connection.php');
                     if ($_GET) {
                         /*
-                         * O GET vem da listagem de clientes indicando qual
+                         * O GET vem da listagem de produtos indicando qual
                          * produto o usuário quer editar.
                          */
                         $resultQuery = $connection->query('SELECT id, nome_produto FROM produto WHERE id=' . $_GET['id']);
                         $data = $resultQuery->fetchAll();
                         echo "<div class='message-wrapper'><p class='generic'>Atualizando dados do produto " . $data[0]['id'] . " (" . $data[0]['nome_produto'] . ")</p></div>";
-                        // $id = $_GET['id']; @APAGAR@
                     } elseif ($_POST) {
                         /*
                          * O POST vem do formulário da própria página
@@ -84,7 +83,7 @@
                 ?>
 
                 <input type="hidden" value="<?php echo $_GET['id'] ?? null; ?>" name="id" required/>
-                <label for="nome">Nome:</label>
+                <label for="name">Nome:</label>
                 <input type="text" id="name" name="name" maxlength="255"/>
                 <label for="code">Código de barras:</label>
                 <input type="text" id="code" name="code" maxlength="40"/>
