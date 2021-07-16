@@ -58,7 +58,7 @@
 
                         include_once('../php/handleData.php');
                         include_once('../php/connection.php');
-                        // echo "INSERT INTO produto VALUES (DEFAULT, '$code', '$name', " . unformatMoneyValue($value) . ")";
+
                         $connection->exec("INSERT INTO produto VALUES (DEFAULT, '$code', '$name', " . unformatMoneyValue($value) . ")");
                         unset($connection);
                         echo "<div class='message-wrapper'><p class='success'>$name foi inserido com sucesso.</p></div>";

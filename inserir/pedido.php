@@ -49,19 +49,23 @@
     </header>
     <main class="content-main" id="content-main">
         <section class="screen-register">
-            <form method="POST" action="./pedido.php" class="form-standard">
+        <form method="POST" action="./pedido.php" class="form-standard">
                 <?php
+                    ini_set('display_errors',1);
+                    ini_set('display_startup_erros',1);
+                    error_reporting(E_ALL);
                     include_once('../php/handleData.php');
                     include_once('../php/connection.php');
-                    if ($_GET) {
-                        /*
-                         * O GET vem da listagem de pedidos indicando qual
-                         * pedido o usuário quer editar.
-                         */
-                        $resultQuery = $connection->query('SELECT numero_pedido, id_cliente, id_produto FROM pedido WHERE numero_pedido=' . $_GET['id']);
-                        $data = $resultQuery->fetchAll();
-                        echo "<div class='message-wrapper'><p class='generic'>Atualizando dados do pedido " . $data[0]['numero_pedido'] . "</p></div>";
 
+                    if ($_POST) {
+                        $client = $_POST['client'] ?? null;
+                        $product = $_POST['product'] ?? null;
+                        $amount = $_POST['amount'] ?? null;
+
+                        $connection->exec("INSERT INTO pedido VALUES (DEFAULT, now(), $client, $product, $amount)");
+                        unset($connection);
+                        echo "<div class='message-wrapper'><p class='success'>O pedido foi registrado com sucesso.</p></div>";
+                    } else {
                         // Pegando todos os clientes
                         $resultQuery = $connection->query('SELECT id, nome_cliente FROM cliente');
                         $clients = $resultQuery->fetchAll();
@@ -69,29 +73,8 @@
                         // Pegando todos os produtos
                         $resultQuery = $connection->query('SELECT id, nome_produto FROM produto');
                         $products = $resultQuery->fetchAll();
-                    } elseif ($_POST) {
-                        /*
-                         * O POST vem do formulário da própria página
-                         * com os dados que serão atualizados.
-                         * Aqui eu faço uma busca no banco de dados para que
-                         * todos os dados que não forem informados permaneçam iguais.
-                         */
-
-                        $orderNumber = $_POST['numero_pedido'] ?? null;
-                        $resultQuery = $connection->query('SELECT quantidade FROM pedido WHERE numero_pedido=' . $orderNumber);
-                        $amountProductInOrder = $resultQuery->fetchAll();
-
-                        $client = $_POST['client'];
-                        $product = $_POST['product'];
-                        $amount = $_POST['amount'] != null ? $_POST['amount'] : $amountProductInOrder[0]['quantidade'];
-
-                        $connection->exec("UPDATE pedido SET id_cliente=$client, id_produto=$product, quantidade=$amount WHERE numero_pedido=$orderNumber ");
-                        unset($connection);
-                        echo "<div class='message-wrapper'><p class='success'>Pedido $orderNumber atualizado com sucesso.</p></div>";
                     }
                 ?>
-
-                <input type="hidden" value="<?php echo $_GET['id'] ?? null; ?>" name="numero_pedido" required/>
 
                 <label for="client">Cliente:</label>
                 <select name="client" id="client">
@@ -122,7 +105,7 @@
                 <label for="amount">Quantidade:</label>
                 <input type="number" id="amount" name="amount" min="1"/>
 
-                <input type="submit" value="Atualizar"/>
+                <input type="submit" value="Cadastrar"/>
             </form>
         </section>
     </main>
